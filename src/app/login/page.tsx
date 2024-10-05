@@ -1,13 +1,9 @@
 import Link from 'next/link'
-import { headers, cookies } from 'next/headers'
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createServerClient } from '@/utils/supabase'
 
-export default function Login({
-  searchParams,
-}: {
-  searchParams: { message: string }
-}) {
+export default function Login() {
   const signIn = async (formData: FormData) => {
     'use server'
 
@@ -28,35 +24,11 @@ export default function Login({
     return redirect('/')
   }
 
-  const signUp = async (formData: FormData) => {
-    'use server'
-
-    const origin = headers().get('origin')
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    const cookieStore = cookies()
-    const supabase = createServerClient(cookieStore)
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
-    })
-
-    if (error) {
-      return redirect('/login?message=Could not authenticate user')
-    }
-
-    return redirect('/login?message=Check email to continue sign in process')
-  }
-
   return (
-    <div className="flex w-full flex-1 flex-col justify-center gap-2 px-8 sm:max-w-md">
+    <div className="flex flex-col flex-1 justify-center gap-2 px-8 w-full sm:max-w-md">
       <Link
         href="/"
-        className="bg-btn-background hover:bg-btn-background-hover group absolute left-8 top-8 flex items-center rounded-md px-4 py-2 text-sm text-foreground no-underline"
+        className="top-8 left-8 absolute flex items-center bg-btn-background hover:bg-btn-background-hover px-4 py-2 rounded-md text-foreground text-sm no-underline group"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +40,7 @@ export default function Login({
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
+          className="mr-2 w-4 h-4 transition-transform group-hover:-translate-x-1"
         >
           <polyline points="15 18 9 12 15 6" />
         </svg>{' '}
@@ -76,14 +48,14 @@ export default function Login({
       </Link>
 
       <form
-        className="flex w-full flex-1 flex-col justify-center gap-2 text-foreground animate-in"
+        className="flex flex-col flex-1 justify-center gap-2 w-full text-foreground animate-in"
         action={signIn}
       >
         <label className="text-md" htmlFor="email">
           Email
         </label>
         <input
-          className="mb-6 rounded-md border bg-inherit px-4 py-2"
+          className="bg-inherit mb-6 px-4 py-2 border rounded-md"
           name="email"
           placeholder="you@example.com"
           required
@@ -92,26 +64,15 @@ export default function Login({
           Password
         </label>
         <input
-          className="mb-6 rounded-md border bg-inherit px-4 py-2"
+          className="bg-inherit mb-6 px-4 py-2 border rounded-md"
           type="password"
           name="password"
           placeholder="••••••••"
           required
         />
-        <button className="mb-2 rounded-md bg-green-700 px-4 py-2 text-foreground">
+        <button className="bg-green-700 mb-2 px-4 py-2 rounded-md text-foreground text-white">
           Sign In
         </button>
-        <button
-          formAction={signUp}
-          className="mb-2 rounded-md border border-foreground/20 px-4 py-2 text-foreground"
-        >
-          Sign Up
-        </button>
-        {searchParams?.message && (
-          <p className="mt-4 bg-foreground/10 p-4 text-center text-foreground">
-            {searchParams.message}
-          </p>
-        )}
       </form>
     </div>
   )
