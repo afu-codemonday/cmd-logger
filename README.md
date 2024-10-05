@@ -1,7 +1,7 @@
 # How to use
 
 ## Create Function
-```typesciprt
+```typescript
 const cmdLogger = (data: any) => {
   try {
     fetch(`${process.env.NEXT_PUBLIC_LOG_URL}/rest/v1/logger`, {
