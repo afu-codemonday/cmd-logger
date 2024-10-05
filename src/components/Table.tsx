@@ -4,19 +4,11 @@ import { createBrowserClient } from '@supabase/ssr'
 import { Slide, ToastContainer, toast } from 'react-toastify'
 import React, { useEffect, useState } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import {
-  Table as MainTable,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import dayjs from 'dayjs'
 import { ClipboardCopy, ExternalLink, RefreshCwIcon, X } from 'lucide-react'
 import { useTheme } from 'next-themes'
-import { JsonView, allExpanded, darkStyles, defaultStyles } from 'react-json-view-lite'
+import { JsonView, allExpanded, defaultStyles } from 'react-json-view-lite'
+import { TableWithBrowserPagination, Column } from 'react-rainbow-components'
 import Modal from 'react-modal'
 import 'react-json-view-lite/dist/index.css'
 import 'react-toastify/dist/ReactToastify.css'
@@ -42,6 +34,8 @@ const Table = () => {
         toast.success("fetch log success", {  })
       }
       setData(logger as any)
+    } else {
+      toast.error(error.message)
     }
   }
 
@@ -78,7 +72,7 @@ const Table = () => {
         </div>
         {openIndex !== -1 && (
           <>
-            <CopyToClipboard text={JSON.stringify(data[openIndex])}>
+            <CopyToClipboard text={JSON.stringify(data[openIndex])} onCopy={() => toast.success('Copy success')}>
               <button className="hover:brightness-110 flex flex-row justify-center items-center gap-x-2 bg-primary mx-auto mb-4 px-4 py-2 rounded-md text-secondary transition-all duration-200">
                 Copy <ClipboardCopy className="text-secondary" />
               </button>
@@ -101,34 +95,28 @@ const Table = () => {
         onClick={() => getLog({ isClick: true })}
         className="flex flex-row gap-x-2 hover:bg-primary mt-2 p-4 rounded-md font-medium text-primary hover:text-white transition-all duration-200 cursor-pointer group"
       >
-        <span className="group-hover:text-white text-secondary-foreground">Logs</span>
+        <span className="group-hover:text-white text-secondary-foreground">Refresh Logs</span>
         <RefreshCwIcon />
       </div>
-      <MainTable>
-        <TableCaption>A list of your logs.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Id</TableHead>
-            <TableHead>Time</TableHead>
-            <TableHead>Data</TableHead>
-            <TableHead></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.map(({ id, created_at, data }, index) => (
-            <TableRow key={id}>
-              <TableCell className="font-medium">{id}</TableCell>
-              <TableCell>{dayjs(created_at).format('DD/MM/YY HH:mm:ss')}</TableCell>
-              <TableCell className="flex flex-row gap-x-1.5 text-xs">
-                {JSON.stringify(data)}
-              </TableCell>
-              <TableCell onClick={onView(index)} className="w-[80px] cursor-pointer">
-                <ExternalLink className="mx-auto text-blue-600" size={20} />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </MainTable>
+      <TableWithBrowserPagination
+        className="mt-4"
+        pageSize={20}
+        data={data}
+        keyField="id"
+      >
+        <Column width={100} header="Id" field="id" />
+        <Column width={200} header="Create At" field="created_at" component={({ value }: any) => <div>{dayjs(value).format('DD/MM/YY HH:mm:ss')}</div>} />
+        <Column header="Data" field="data" component={({ value }: any) => <div className="line-clamp-3">{JSON.stringify(value)}</div>} />
+        <Column
+          width={80}
+          component={({ value, index }: any) => (
+            <div onClick={onView(index)} className="pt-2 w-[80px] h-full">
+              <ExternalLink className="mx-auto text-blue-600" size={20} />
+            </div>
+          )}
+        />
+      </TableWithBrowserPagination>
+      <div className="h-4" />
     </>
   )
 }
