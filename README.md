@@ -1,5 +1,17 @@
-# How to use
+# Tech Stack
+- supabase free tier for store database & auth service
+- vercel free tier for hosting web, api, domain
+- nextjs for webapp and api
+- cron-job.org for keep schedule create mocking keep-alive table for let's supabase no pauase (at free tier)
+- 80% of code made by AI :) (CHAT GPT)
 
+# Support
+- Front-end
+- Back-end
+
+<hr />
+
+# How to use
 ## Create Function
 ```typescript
 const NEXT_PUBLIC_LOG_URL = "https://lylmbftgwisgmpuxvlzz.supabase.co"
