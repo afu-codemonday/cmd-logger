@@ -2,7 +2,7 @@
 - supabase free tier for store database & auth service
 - vercel free tier for hosting web, api, domain
 - nextjs for webapp and api
-- cron-job.org for keep schedule create mocking keep-alive table for let's supabase no pauase (at free tier)
+- cron-job.org for keep schedule create mocking keep-alive record for let's supabase no pauase (at free tier)
 - 80% of code made by AI :) (CHAT GPT)
 
 # Support
