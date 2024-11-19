@@ -1,6 +1,7 @@
 # Tech Stack
 - supabase free tier for store database & auth service
 - vercel free tier for hosting web, api, domain
+- when this main repo change vercel automatic deploy
 - nextjs for webapp and api
 - cron-job.org for keep schedule create mocking keep-alive record for let's supabase no pauase (at free tier)
 - 80% of code made by AI and starter nextjs-supabase repo :D
