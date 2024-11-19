@@ -3,7 +3,7 @@
 - vercel free tier for hosting web, api, domain
 - nextjs for webapp and api
 - cron-job.org for keep schedule create mocking keep-alive record for let's supabase no pauase (at free tier)
-- 80% of code made by AI :) (CHAT GPT)
+- 80% of code made by AI and starter nextjs repo :D
 
 # Support
 - Front-end
