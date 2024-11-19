@@ -30,7 +30,7 @@ export default cmdLogger
 const exampleData = {
    id: 1,
    message: "hello log",
-}
+} // any object no required id
 
 cmdLogger(exampleData) // pass object
 ```
