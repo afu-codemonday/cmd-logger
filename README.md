@@ -36,7 +36,7 @@ cmdLogger(exampleData) // pass object
 ```
 
 ## See log at https://cmd-logger.vercel.app/
-username: `admin@codemonday.com`
+username: `admin@codemonday.com` <br />
 password: `CMD`
 
 
