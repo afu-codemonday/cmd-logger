@@ -86,6 +86,9 @@ const Table = () => {
           overlay: {
             backgroundColor: 'rgba(0,0,0,0.6)',
           },
+          content: {
+            backgroundColor: theme === 'dark' ? 'black' : 'white',
+          },
         }}
         onRequestClose={() => setOpenIndex(-1)}
       >
@@ -93,7 +96,7 @@ const Table = () => {
           onClick={() => setOpenIndex(-1)}
           className="top-4 right-4 absolute p-2 cursor-pointer"
         >
-          <X className="text-black text-xl" />
+          <X className="text-black text-xl dark:text-white" />
         </div>
         {openIndex !== -1 && (
           <>
