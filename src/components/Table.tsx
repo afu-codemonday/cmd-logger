@@ -40,19 +40,23 @@ const Table = () => {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       )
   
-      let { data: logger, error } = await supabase
-        .from('logger')
-        .select('*')
-        .order('id', { ascending: false })
-        .limit(100)
-  
-      if (!error) {
-        if (props?.isClick) {
-          toast.success("fetch log success", {  })
+      try {
+        let { data: logger, error } = await supabase
+          .from('logger')
+          .select('*')
+          .order('id', { ascending: false })
+          .limit(150)
+    
+        if (!error) {
+          if (props?.isClick) {
+            toast.success("fetch log success", {  })
+          }
+          setData(logger as any)
+        } else {
+          toast.error(error.message)
         }
-        setData(logger as any)
-      } else {
-        toast.error(error.message)
+      } catch (e) {
+        toast.error('maybe time out inspect for check error')
       }
 
       isCallingApi.current = false
@@ -144,7 +148,7 @@ const Table = () => {
         }}
       />
       <div className="mt-4 text-center text-gray-400 text-sm">
-        --- for performance (free tier) this log show only lastest 100 items ---
+        --- for performance (free tier) this log show only lastest 150 items ---
       </div>
       <div className="h-4" />
     </>
