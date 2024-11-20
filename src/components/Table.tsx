@@ -11,7 +11,7 @@ import { useTheme } from 'next-themes'
 // import { TableWithBrowserPagination, Column } from 'react-rainbow-components'
 import Modal from 'react-modal'
 // import 'react-json-view-lite/dist/index.css'
-// import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css'
 import { TableVirtuoso } from 'react-virtuoso'
 
 const Spinner = () => (
